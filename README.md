@@ -25,7 +25,7 @@ webpack4 + vue2 + vue-router + nginx
     │   │   └── home.vue
     │   └── list                        // 列表页
     │       └── list.vue
-    └── router.js
+    └── router.js                       // vue路由
 
 ```
 
