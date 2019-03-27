@@ -1,4 +1,4 @@
-## 搭建webpack4和vue的单页面应用
+## 构建webpack4和vue的单页面应用
 ### 技术栈
 webpack4 + vue2 + vue-router + nginx
 
