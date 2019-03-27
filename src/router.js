@@ -1,5 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Home from './pages/home/home.vue';
+import List from './pages/list/list.vue';
+import Detail from './pages/detail/detail.vue';
 
 Vue.use(Router);
 
@@ -13,8 +16,8 @@ export default new Router({
     }
   },
   routes: [
-    { path: '/list', components: require('./pages/list/list.vue') },
-    { path: '/detail', components: require('./pages/detail/detail.vue') },
-    { path: '*', components: require('./pages/home/home.vue') }
+    { path: '/list', component: List },
+    { path: '/detail', component: Detail },
+    { path: '*', component: Home }
   ]
 });

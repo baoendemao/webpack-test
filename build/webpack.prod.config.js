@@ -6,6 +6,7 @@ const WebpackParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const webpackBaseConfig = require('./webpack.base.config');
 
 module.exports = merge(webpackBaseConfig, {
+  mode: 'production',
   plugins: [
     new WebpackParallelUglifyPlugin({
       uglifyJS: {
@@ -23,6 +24,17 @@ module.exports = merge(webpackBaseConfig, {
     }),
     new OptimizeCSSPlugin({
       cssProcessorOptions: {safe: true}
-    }),
-  ]
+    })
+  ],
+  optimization: { 
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendor",
+          chunks: "all"
+        }
+      }
+    }
+  }
 });

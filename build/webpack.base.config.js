@@ -5,25 +5,25 @@ const { VueLoaderPlugin } = require('vue-loader');
 const HappyPack = require('happypack');
 const os = require('os');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const chalk = require('chalk');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  devtool: '#source-map',
   entry: {
     app: './src/app.js'
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: '[name].[hash].js'
+    filename: '[name].[chunkhash:8].js'
   },
   module: {
     rules: [
       { test: /\.vue$/, loader: 'vue-loader' }, 
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/}, 
       { test: /\.scss$/, use: [
-          {loader: 'vue-style-loader'}, 
+          {loader: devMode ? 'vue-style-loader' : MiniCssExtractPlugin.loader}, 
           {loader: 'css-loader'}, 
           {
             // css自动加前缀
@@ -58,19 +58,5 @@ module.exports = {
     new ProgressBarPlugin({
       format: '  build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)'
     })
-  ],
-  optimization: { 
-    splitChunks: {
-      cacheGroups: {
-        commons: {
-          chunks: "initial",
-          name: "common",
-          minChunks: 2,
-          maxInitialRequests: 5, // The default limit is too small to showcase the effect
-          minSize: 0, // This is example is too small to create commons chunks
-          reuseExistingChunk: true 
-        }
-      }
-    }
-  }
+  ]
 }
